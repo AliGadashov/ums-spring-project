@@ -51,11 +51,14 @@ public class UserService implements IUserService {
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException("User not found!"));
 
-        byUser.setRole(role);
+        if (byUser.getRole().equals(role)){
+            return ResponseEntity
+                    .status(HttpStatus.FOUND)
+                    .body(byUser);
+        }
 
-        return ResponseEntity
-                .status(HttpStatus.FOUND)
-                .body(byUser);
+        return null;
+
     }
 
     @Override
